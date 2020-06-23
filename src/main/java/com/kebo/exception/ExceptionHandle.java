@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+
 /**
  * 统一异常处理
  */
@@ -25,9 +28,10 @@ public class ExceptionHandle {
     @ExceptionHandler(value = Exception.class)
     @ResponseBody
     public Result handle(Exception e) {
-        logger.error(e.getMessage());
-        logger.error(e.getStackTrace(),e.printStackTrace());
-        //logger.error(e.getStackTrace());
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        e.printStackTrace(new PrintStream(baos));
+        String exception = baos.toString();
+        logger.error(exception);
         if (e instanceof UserException) {
             UserException userException = (UserException) e;
             return ResultUtil.error(userException);
