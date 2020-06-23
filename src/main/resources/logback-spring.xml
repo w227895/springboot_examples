@@ -3,7 +3,7 @@
     <property name="app_name" value="hmbtdz"/>
     <contextName>${app_name}</contextName>
     <springProperty scope="context" name="fuchain" source="spring.application.name"/>
-    <property name="log.path" value="/root/hmbtdz/logs"/>
+    <property name="log.path" value="D:\logs"/>
     <!-- 控制台输出 -->
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
@@ -45,13 +45,14 @@
             <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n </pattern>
         </layout>
     </appender>
-    <!-- <root level="info">
+
+     <root level="info">
          <appender-ref ref="STDOUT" />
          <appender-ref ref="INFO_FILE" />
          <appender-ref ref="ERROR_FILE" />
-     </root>-->
+     </root>
 
-    <springProfile name="dev">
+    <!--<springProfile name="dev">
         <logger name="com" level="DEBUG" additivity="false">
             <appender-ref ref="STDOUT" />
             <appender-ref ref="INFO_FILE" />
@@ -62,10 +63,16 @@
             <appender-ref ref="INFO_FILE" />
             <appender-ref ref="ERROR_FILE" />
         </logger>
-    </springProfile>
+    </springProfile>-->
 
     <springProfile name="test,prod">
         <logger name="com" level="INFO" additivity="false">
+            <appender-ref ref="INFO_FILE" />
+            <appender-ref ref="ERROR_FILE" />
+            <appender-ref ref="STDOUT" />
+        </logger>
+        <logger name="org.springframework" level="ERROR" additivity="false">
+            <appender-ref ref="STDOUT" />
             <appender-ref ref="INFO_FILE" />
             <appender-ref ref="ERROR_FILE" />
         </logger>
